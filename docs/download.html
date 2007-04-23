@@ -1,0 +1,68 @@
+<html>
+    <head>
+        <title>Download Clickstream</title>
+    </head>
+
+    <body bgcolor="#FFFFFF">
+
+        <h3>Released Versions</h3>
+        <p>The following versions of Clickstream are currently available.</p>
+
+        <ul>
+            <li>Clickstream 1.0.3 - <a href="https://clickstream.dev.java.net/files/documents/875/9502/clickstream-1.0.3.war">blank war</a> |
+            <a href="https://clickstream.dev.java.net/files/documents/875/9504/clickstream-1.0.3-sources.zip">full zip (with sources)</a> |
+            <a href="https://clickstream.dev.java.net/files/documents/875/9500/clickstream-1.0.3.jar">jar file only</a>
+            - December 7th, 2004</li>
+            <li>Clickstream 1.0.2 - <a href="https://clickstream.dev.java.net/files/documents/875/3803/clickstream-1.0.2.war">blank war</a> |
+            <a href="https://clickstream.dev.java.net/files/documents/875/3804/clickstream-1.0.2-sources.zip">full zip (with sources)</a> |
+            <a href="https://clickstream.dev.java.net/files/documents/875/3802/clickstream-1.0.2.jar">jar file only</a>
+            - April 12th, 2004</li>
+            <li>Clickstream 1.0.1 - <a href="https://clickstream.dev.java.net/files/documents/875/1845/clickstream-1.0.1.war">blank war</a> |
+            <a href="https://clickstream.dev.java.net/files/documents/875/1846/clickstream-1.0.1-sources.zip">full zip (with sources)</a> |
+            <a href="https://clickstream.dev.java.net/files/documents/875/1844/clickstream-1.0.1.jar">jar file only</a>
+            - November 21th, 2003</li>
+            <li>Clickstream 1.0 - <a href="https://clickstream.dev.java.net/files/documents/875/1824/clickstream-1.0.war">blank war</a> |
+            <a href="https://clickstream.dev.java.net/files/documents/875/1825/clickstream-1.0-sources.zip">full zip (with sources)</a> |
+            <a href="https://clickstream.dev.java.net/files/documents/875/1823/clickstream-1.0.jar">jar file only</a>
+            - November 20th, 2003</li>
+        </ul>
+
+        <p>The dependency <b>commons-logging.jar</b> can be downloaded at <a
+        href="http://jakarta.apache.org/commons/logging/">http://jakarta.apache.org/commons/logging/</a>,
+        under 'Releases'.</p>
+
+        <h3>CVS Access</h3>
+        <p>The Clickstream project is hosted at <a href="http://clickstream.dev.java.net">http://clickstream.dev.java.net</a>. You can
+        browse the CVS tree <a href="http://clickstream.dev.java.net/source/browse/clickstream">here</a>. Instructions for checking
+        the code out of CVS are available <a href="http://clickstream.dev.java.net/servlets/ProjectSource">here</a>.</p>
+
+        <h3>Building</h3>
+
+        <p>To build Clickstream from the sources, you must have the
+        <a href="http://java.sun.com/j2se/downloads.html">Java SDK version 1.3</a> or above,
+        and <a href="http://ant.apache.org/">Jakarta Ant</a> version 1.5 or above.</p>
+
+        <p>To build the Clickstream binaries, change to the clickstream directory, and type:</p>
+
+        <blockquote><code><b>ant</b></code></blockquote>
+
+        <p>If there are any errors, try clearing your classpath and retry.</p>
+
+    	<p>Upon completion, a directory called <code>dist</code> should have
+    	been created which contains <code>clickstream-{version}.jar</code>,
+    	<code>clickstream-{version}.war</code> (example web application) and
+    	<code>clickstream-{version}-sources.zip</code>.</p>
+
+        <p>Other build targets include:</p>
+
+    	<blockquote>
+    		<code><b>ant war</b></code><br>
+    		Builds the sample web-app (<code>dist/clickstream-{version}.war</code>).
+    	</blockquote>
+
+    	<blockquote>
+    		<code><b>ant docs</b></code><br>
+    		Builds the API JavaDoc and copies the documentation (<code>dist/docs/</code>).
+    	</blockquote>
+    </body>
+</html>

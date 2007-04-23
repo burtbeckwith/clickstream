@@ -1,0 +1,123 @@
+<html>
+    <head>
+        <title>Clickstream Overview</title>
+        <meta name="keywords" content="clickstream, opensymphony, traffic path, click trail, session, current users, visitors, statistics, java, j2ee" />
+	    <meta name="description" content="Opensymphony Clickstream - Utility to track the current users on your site, and where they've been in detail." />
+    </head>
+
+    <body>
+
+        <p>Utility to track the current users on your site, and where they've
+        been in detail. This allows you to track 'click streams' or 'traffic
+        paths' across your site. Please visit the JIRA <a
+        href="http://jira.opensymphony.com/secure/BrowseProject.jspa?id=10012&report=changelog">change log</a>
+        to see the latest developments in Clickstream.</p>
+
+        <h3>Features</h3>
+        <ul>
+            <li>Start tracking click stream when users' sessions begin (via a <a href="http://java.sun.com/products/servlet/2.3/javadoc/javax/servlet/ServletContextListener.html">Listener</a>).</li>
+            <li>Track information with each click the user makes (via a <a href="http://java.sun.com/products/servlet/2.3/javadoc/javax/servlet/Filter.html">Servlet Filter</a>).</li>
+            <li>Log the complete click stream to a file or PrintStream when the users' session ends.</li>
+            <li>Try to discover whether the user is a bot, and filter appropriately (currently 252 bots are detected).</li>
+            <li>JSP and/or Servlet front-ends to browse the currently active click streams.</li>
+        </ul>
+
+        <h3>Installation </h3>
+
+        <p>Put <b><a href="download.html">clickstream-@VERSION@.jar and commons-logging.jar</a></b> in <b>[web-app]/WEB-INF/lib</b>
+        and then add the following to <b>[web-app]/WEB-INF/web.xml</b> within the <b>&lt;web-app&gt;</b> tag:</p>
+
+<pre style="border: 1px solid #999999; padding: 5px">
+&lt;filter&gt;
+    &lt;filter-name&gt;<b>clickstream</b>&lt;/filter-name&gt;
+    &lt;filter-class&gt;<b>com.opensymphony.clickstream.ClickstreamFilter</b>&lt;/filter-class&gt;
+&lt;/filter&gt;
+
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;clickstream&lt;/filter-name&gt;
+    &lt;url-pattern&gt;<b>*.jsp</b>&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+
+&lt;filter-mapping&gt;
+    &lt;filter-name&gt;clickstream&lt;/filter-name&gt;
+    &lt;url-pattern&gt;<b>*.html</b>&lt;/url-pattern&gt;
+&lt;/filter-mapping&gt;
+
+&lt;listener&gt;
+    &lt;listener-class&gt;<b>com.opensymphony.clickstream.ClickstreamListener</b>&lt;/listener-class&gt;
+&lt;/listener&gt;
+</pre>
+
+        <p>This tracks <b>any request for a JSP or HTML file</b>. Whenever an
+        HttpSession is invalidated, the complete click stream for that session
+        will be logged. If you want to track other clicks (eg. TXT or PDF
+        files), just add more filter mappings.</p>
+
+        <p>A full web.xml example is available <a href="https://clickstream.dev.java.net/source/browse/*checkout*/clickstream/src/webapp/WEB-INF/web.xml?rev=HEAD">here</a>.</p>
+
+        <h3>Front-ends</h3>
+
+        <ul>
+            <li>
+                JSP: you can drop in the JSP files <b><a href="https://clickstream.dev.java.net/source/browse/*checkout*/clickstream/src/webapp/clickstreams.jsp?rev=HEAD&content-type=text/plain">clickstreams.jsp</a></b> and
+                <b><a href="https://clickstream.dev.java.net/source/browse/*checkout*/clickstream/src/webapp/viewstream.jsp?rev=HEAD&content-type=text/plain">viewstream.jsp</a></b> to display the current Clickstreams active in the
+                application.
+            </li>
+            <li>
+                Servlet: you can configure your web.xml to include the
+                <a href="api/com/opensymphony/clickstream/servlet/ActiveStreamsServlet.html">ActiveStreamsServlet</a> to display the current Clickstreams active in the application.
+            </li>
+        </ul>
+
+        <h3>Configuration</h3>
+
+        <p>Logging is quite basic (you can however <a href="http://jakarta.apache.org/commons/logging/guide.html">integrate with Log4J</a>).
+        If you need more advanced logging, implement the <i><a href="api/com/opensymphony/clickstream/logger/ClickstreamLogger.html">com.opensymphony.clickstream.logger.ClickstreamLogger</a></i>
+        interface and provide any sort of persistence method you desire.</p>
+
+        <p>By default Clickstream is configured to use the
+        <i><a href="api/com/opensymphony/clickstream/logger/SimpleClickstreamLogger.html">com.opensymphony.clickstream.logger.SimpleClickstreamLogger</a></i> class
+        to handle logging. This logger does nothing more than send an INFO log
+        statement to the <a href="http://jakarta.apache.org/commons/logging/">Jakarta Commons Logging</a>
+        utility, which in turn can talk to several logging providers,
+        including <a href="http://logging.apache.org/log4j/docs/">Log4j</a>.</p>
+
+        <p>You can change this behavior by creating a <b>clickstream.xml</b>
+        config file and placing it in your application's classpath, usually
+        <b>[web-app]/WEB-INF/classes</b>. The config file should be in the following form:</p>
+
+<pre style="border: 1px solid #999999; padding: 5px">
+&lt;clickstream&gt;
+    &lt;!-- there can only be one logger --&gt;
+    &lt;logger class=&quot;<i>com.opensymphony.clickstream.logger.SimpleClickstreamLogger</i>&quot;/&gt;
+
+    &lt;!-- there can be zero or more bot-hosts --&gt;
+    &lt;bot-host name=&quot;someBotHost&quot;/&gt;
+
+    &lt;!-- there can be zero or more bot-agents --&gt;
+    &lt;bot-agent name=&quot;someBotAgent&quot;/&gt;
+&lt;/clickstream&gt;
+</pre>
+
+        <p><b>If you wish to provide your own logger, visit the Clickstream <a
+        href="api/index.html">JavaDoc</a>.</b></p>
+
+        <h3>Container Specific Issues</h3>
+
+        <p>BEA WebLogic 8.1 (SP2) throws NullPointerException (when setting the
+        attribute NULL for the clickstreams in the ServletContext on
+        contextDestroyed) when the Clickstream application is stopped from the
+        console. Apply patch CR133558 (included in SP3).</p>
+
+        <h3>External Documentation</h3>
+
+        <ul>
+            <li><a href="visitor_tracking.pdf">Track Your Users With EAServer</a> - A Sybase White Paper by Berndt Hamboeck.</li>
+            <li><a href="http://www.javaworld.com/javaworld/jw-06-2001/jw-0622-filters-p2.html">Filter code with Servlet 2.3 model</a>,
+            paragraph "Who's on your site, and what are they doing?" - by Jason Hunter.</li>
+        </ul>
+
+        <p>The modifications to Clickstream mentioned in these documents are already
+        integrated, <b>don't apply them</b>.</p>
+    </body>
+</html>
