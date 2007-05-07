@@ -10,6 +10,7 @@
 	<artifactId>clickstream-webapp</artifactId>
 	<packaging>war</packaging>
 	<version>1.0.4</version>
+	<name>clickstream-webapp</name>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
@@ -40,7 +41,15 @@
 			<scope>provided</scope>
 		</dependency>
 	</dependencies>
-        <repositories>
+	<build>
+		<plugins>
+			<plugin> 
+       			 <groupId>org.mortbay.jetty</groupId> 
+        		<artifactId>maven-jetty-plugin</artifactId>
+     		</plugin>
+		</plugins>
+	</build>
+    <repositories>
                 <repository>
                         <id>snapshots-maven-codehaus</id>
                         <name>snapshots-maven-codehaus</name>

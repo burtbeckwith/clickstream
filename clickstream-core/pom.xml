@@ -10,6 +10,7 @@
 	<artifactId>clickstream-core</artifactId>
 	<packaging>jar</packaging>
 	<version>1.0.4</version>
+	<name>clickstream-core</name>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
