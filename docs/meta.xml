@@ -1,0 +1,94 @@
+<project>
+    <name>clickstream</name>
+    <jiraId>10050</jiraId>
+    <jiraName>CLK</jiraName>
+    <confluenceName>CS</confluenceName>
+    <svn>true</svn>
+
+    <forums>
+        <usersId>39</usersId>
+        <devId>40</devId>
+        <cvsId>41</cvsId>
+    </forums>
+
+    <docs>
+        <url>wikidocs/Documentation.html</url>
+    </docs>
+
+    <owners>
+        <person>
+            <name>Patrick Lightbody</name>
+            <email>plightbo@gmail.com</email>
+            <role>OGNL and TypeConversion</role>
+        </person>
+        <person>
+            <name>Jason Carreira</name>
+            <email>jcarreira@gmail.com</email>
+            <role>Validation Framework, Interceptors, ActionInvocation / ActionProxy</role>
+        </person>
+        <person>
+            <name>Rainer Hermanns</name>
+            <email>rainerh@gmail.com</email>
+        </person>
+        <person>
+            <name>Mathias Bogaert</name>
+            <email></email>
+        </person>
+    </owners>
+
+    <developers>
+        <person>
+            <name>Cameron Braid</name>
+            <email>cameron@braid.com.au</email>
+        </person>
+        <person>
+            <name>Bill Lynch</name>
+            <email>bill@jivesoftware.com</email>
+        </person>
+        <person>
+            <name>James House</name>
+            <email>jhouse@revolition.net</email>
+        </person>
+        <person>
+            <name>Jon Lipsky</name>
+            <email>jon.lipsky@xesoft.com</email>
+            <role>XWork Configuration Editor</role>
+        </person>
+        <person>
+            <name>Matthew Payne</name>
+            <email>matthew.payne@sutternow.com</email>
+        </person>
+        <person>
+            <name>Matt Ho</name>
+            <email>matt@xtreme.com</email>
+        </person>
+        <person>
+            <name>Mark Woon</name>
+            <email>morpheus@helix.stanford.edu</email>
+        </person>
+        <person>
+            <name>Peter Kelley</name>
+            <email>yellekau@yahoo.com</email>
+        </person>
+        <person>
+            <name>Toby Jee</name>
+            <email>tm_jee@yahoo.co.uk</email>
+        </person>
+    </developers>
+
+    <releases>
+        <release>
+            <version>1.0.3</version>
+            <date>07/12/2004</date>
+            <jiraId>21671</jiraId>
+            <downloads>
+                <download>
+                    <url>https://clickstream.dev.java.net/files/documents/875/9504/clickstream-1.0.3-sources.zip</url>
+                    <name>Full</name>
+                </download>
+            </downloads>
+        </release>
+        
+    </releases>
+
+</project>
