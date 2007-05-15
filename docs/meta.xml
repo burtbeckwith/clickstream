@@ -1,14 +1,14 @@
 <project>
     <name>clickstream</name>
-    <jiraId>10050</jiraId>
+    <jiraId>10012</jiraId>
     <jiraName>CLK</jiraName>
     <confluenceName>CS</confluenceName>
     <svn>true</svn>
 
     <forums>
-        <usersId>39</usersId>
-        <devId>40</devId>
-        <cvsId>41</cvsId>
+        <usersId>42</usersId>
+        <devId>43</devId>
+        <cvsId>44</cvsId>
     </forums>
 
     <docs>
