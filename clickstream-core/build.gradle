@@ -1,0 +1,33 @@
+apply plugin: 'java'
+
+sourceCompatibility = '1.5'
+targetCompatibility = '1.5'
+version = '1.0.4'
+
+jar {
+	archiveName = 'clickstream-' + version + '.jar'
+
+	manifest {
+		attributes(
+			'Implementation-Title': 'Clickstream',
+			'Implementation-Version': version,
+			'Built-By': 'Gradle ' + gradle.gradleVersion,
+			'Created-By': System.properties['java.vm.version'] + ' (' + System.properties['java.vm.vendor'] + ')'
+		)
+	}
+}
+
+configure([compileJava]) {
+	options.deprecation = true
+	options.debug = true
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	compile 'commons-logging:commons-logging:1.1.1'
+	compile 'javax.servlet:servlet-api:2.5'
+}
+
