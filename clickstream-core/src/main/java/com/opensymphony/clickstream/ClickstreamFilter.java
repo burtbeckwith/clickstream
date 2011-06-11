@@ -1,74 +1,79 @@
 package com.opensymphony.clickstream;
 
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-import java.io.IOException;
-
 /**
- * The filter that keeps track of a new entry in the clickstream for <b>every request</b>.
+ * Keeps track of a new entry in the clickstream for <b>every request</b>.
  *
  * @author <a href="plightbo@hotmail.com">Patrick Lightbody</a>
  */
 public class ClickstreamFilter implements Filter {
-    private static final Log log = LogFactory.getLog(ClickstreamFilter.class);
 
-    protected FilterConfig filterConfig;
+	private static final Log log = LogFactory.getLog(ClickstreamFilter.class);
 
-    /**
-     * Attribute name indicating the filter has been applied
-     * to a given request.
-     */
-    private final static String FILTER_APPLIED = "_clickstream_filter_applied";
+	protected FilterConfig filterConfig;
 
-    /**
-     * Processes the given request and/or response.
-     *
-     * @param request The request
-     * @param response The response
-     * @param chain The processing chain
-     * @throws IOException If an error occurs
-     * @throws ServletException If an error occurs
-     */
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-        // Ensure that filter is only applied once per request.
-        if (request.getAttribute(FILTER_APPLIED) == null) {
-            if (log.isDebugEnabled()) {
-                log.debug("Applying clickstream filter to request.");
-            }
+	/**
+	 * Attribute name indicating the filter has been applied to a given request.
+	 */
+	private final static String FILTER_APPLIED = "_clickstream_filter_applied";
 
-            request.setAttribute(FILTER_APPLIED, Boolean.TRUE);
+	/**
+	 * Processes the given request and/or response.
+	 *
+	 * @param req The request
+	 * @param res The response
+	 * @param chain The processing chain
+	 * @throws IOException If an error occurs
+	 * @throws ServletException If an error occurs
+	 */
+	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
+		// Ensure that filter is only applied once per request.
+		if (req.getAttribute(FILTER_APPLIED) == null) {
+			log.debug("Applying clickstream filter to request.");
 
-            HttpSession session = ((HttpServletRequest) request).getSession();
-            Clickstream stream = (Clickstream) session.getAttribute(ClickstreamListener.SESSION_ATTRIBUTE_KEY);
-            stream.addRequest((HttpServletRequest) request);
-        }
-        else {
-            if (log.isDebugEnabled()) {
-                log.debug("Clickstream filter already applied, ignoring it.");
-            }
-        }
+			req.setAttribute(FILTER_APPLIED, true);
 
-        // pass the request on
-        chain.doFilter(request, response);
-    }
+			HttpServletRequest request = (HttpServletRequest)req;
 
-    /**
-     * Initializes this filter.
-     *
-     * @param filterConfig The filter configuration
-     * @throws ServletException If an error occurs
-     */
-    public void init(FilterConfig filterConfig) throws ServletException {
-        this.filterConfig = filterConfig;
-    }
+			HttpSession session = request.getSession();
+			Clickstream stream = (Clickstream) session.getAttribute(ClickstreamListener.SESSION_ATTRIBUTE_KEY);
+			stream.addRequest(request);
+		}
+		else {
+			log.debug("Clickstream filter already applied, ignoring it.");
+		}
 
-    /**
-     * Destroys this filter.
-     */
-    public void destroy() {
-    }
+		// pass the request on
+		chain.doFilter(req, res);
+	}
+
+	/**
+	 * Initializes this filter.
+	 *
+	 * @param filterConfig The filter configuration
+	 * @throws ServletException If an error occurs
+	 */
+	public void init(FilterConfig config) throws ServletException {
+		filterConfig = config;
+	}
+
+	/**
+	 * Destroys this filter.
+	 */
+	public void destroy() {
+		// nothing to do
+	}
 }
